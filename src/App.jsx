@@ -723,53 +723,171 @@ export default function App() {
 
       {/* ══ HOURS + CONTACT ══ */}
       <section id="contact" style={{ borderTop: `1px solid ${T.border}`, background: "rgba(255,255,255,0.013)" }}>
-        <div style={{ maxWidth: 1240, margin: "0 auto", padding: "88px 56px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80 }}>
-          <Reveal>
-            <div>
-              <Eyebrow>Hours</Eyebrow>
-              <h2 style={{ fontFamily: T.serif, fontSize: "clamp(28px, 3vw, 42px)", fontWeight: 300, marginBottom: 32 }}>When we're open.</h2>
-              {[
-                ["Monday", "Closed", false],
-                ["Tuesday", "Closed", false],
-                ["Wednesday", "8 PM – 2 AM", true],
-                ["Thursday", "7:30 PM – 2 AM", true],
-                ["Friday", "7 PM – 3 AM", true],
-                ["Saturday", "7 PM – 3 AM", true],
-                ["Sunday", "Closed", false],
-              ].map(([day, hours, hl]) => <HourRow key={day} day={day} hours={hours} highlight={hl} />)}
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <div>
-              <Eyebrow>Find Us</Eyebrow>
-              <h2 style={{ fontFamily: T.serif, fontSize: "clamp(28px, 3vw, 42px)", fontWeight: 300, marginBottom: 32 }}>Visit us tonight.</h2>
-              <p style={{ fontFamily: T.sans, fontSize: 15, fontWeight: 300, color: T.dim, lineHeight: 1.8, marginBottom: 8 }}>
-                1343 Connecticut Ave NW<br />Washington, DC 20036
-              </p>
-              <p style={{ fontFamily: T.sans, fontSize: 14, color: "rgba(255,255,255,0.38)", marginBottom: 8 }}>
-                Across from Dupont Circle Metro · South side exit
-              </p>
-              <a href="tel:+12025308844" style={{ fontFamily: T.serif, fontSize: 22, color: T.gold, textDecoration: "none", display: "block", marginBottom: 36 }}>(202) 530-8844</a>
-              <div style={{ display: "flex", gap: 12, flexDirection: "column" }}>
-                <a href="https://maps.google.com/?q=1343+Connecticut+Ave+NW+Washington+DC" target="_blank" rel="noopener noreferrer" style={{
-                  fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
-                  color: "#000", background: T.gold, padding: "14px 28px", borderRadius: 2,
-                  textDecoration: "none", fontWeight: 500, textAlign: "center", transition: "opacity 0.2s",
-                }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-                >Get Directions</a>
-                <a href="tel:+12024223005" style={{
-                  fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
-                  color: T.white, background: "transparent", border: `1px solid ${T.border}`, padding: "14px 28px", borderRadius: 2,
-                  textDecoration: "none", fontWeight: 300, textAlign: "center", transition: "border-color 0.2s",
-                }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)"}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = T.border}
-                >Call to Reserve · (202) 422-3005</a>
+        <div style={{ maxWidth: 1240, margin: "0 auto", padding: "88px 56px" }}>
+
+          {/* Top row — Hours + Location */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, marginBottom: 72 }}>
+
+            {/* Hours */}
+            <Reveal>
+              <div>
+                <Eyebrow>Hours</Eyebrow>
+                <h2 style={{ fontFamily: T.serif, fontSize: "clamp(28px, 3vw, 42px)", fontWeight: 300, marginBottom: 32 }}>When we're open.</h2>
+                {[
+                  ["Monday", "Closed", false],
+                  ["Tuesday", "Closed", false],
+                  ["Wednesday", "8 PM – 2 AM", true],
+                  ["Thursday", "8 PM – 2 AM", true],
+                  ["Friday", "7 PM – 3 AM", true],
+                  ["Saturday", "7 PM – 3 AM", true],
+                  ["Sunday", "Closed", false],
+                ].map(([day, hours, hl]) => <HourRow key={day} day={day} hours={hours} highlight={hl} />)}
+                {/* Holiday note */}
+                <div style={{ marginTop: 20, padding: "14px 16px", background: "rgba(232,200,74,0.05)", border: `1px solid rgba(232,200,74,0.15)`, borderRadius: 3 }}>
+                  <p style={{ fontFamily: T.sans, fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
+                    Closed Thanksgiving Thursday · Closed Christmas Eve Wednesday · Closed New Year's Day Thursday
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Location */}
+            <Reveal delay={120}>
+              <div>
+                <Eyebrow>Find Us</Eyebrow>
+                <h2 style={{ fontFamily: T.serif, fontSize: "clamp(28px, 3vw, 42px)", fontWeight: 300, marginBottom: 32 }}>Visit us tonight.</h2>
+                <p style={{ fontFamily: T.sans, fontSize: 15, fontWeight: 300, color: T.dim, lineHeight: 1.8, marginBottom: 6 }}>
+                  Heart of Dupont Circle<br />
+                  1343 Connecticut Ave NW<br />
+                  Washington, DC 20036
+                </p>
+                <p style={{ fontFamily: T.sans, fontSize: 13, color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>
+                  Across from Dupont Circle Metro · South side exit
+                </p>
+                <p style={{ fontFamily: T.sans, fontSize: 13, color: "rgba(255,255,255,0.35)", marginBottom: 28 }}>
+                  For more info and reservations text
+                </p>
+
+                {/* Phone numbers */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 32 }}>
+                  <a href="tel:+12025308844" style={{ fontFamily: T.serif, fontSize: 24, color: T.gold, textDecoration: "none" }}>(202) 530-8844</a>
+                  <a href="tel:+12024223005" style={{ fontFamily: T.serif, fontSize: 18, color: "rgba(232,200,74,0.65)", textDecoration: "none" }}>(202) 422-3005 · Reservations</a>
+                </div>
+
+                {/* Social icons */}
+                <div style={{ display: "flex", gap: 16, marginBottom: 32 }}>
+                  {[
+                    { label: "Facebook", href: "https://facebook.com/CafeCitron", icon: "f" },
+                    { label: "Yelp", href: "#", icon: "✦" },
+                    { label: "Instagram", href: "https://instagram.com/cafecitron", icon: "◎" },
+                  ].map(({ label, href, icon }) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                      title={label}
+                      style={{
+                        width: 40, height: 40, borderRadius: "50%",
+                        border: `1px solid ${T.border}`,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        color: T.faint, textDecoration: "none", fontSize: 14,
+                        fontFamily: T.sans, transition: "border-color 0.2s, color 0.2s",
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = T.gold; e.currentTarget.style.color = T.gold; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = T.border; e.currentTarget.style.color = T.faint; }}
+                    >{icon}</a>
+                  ))}
+                </div>
+
+                <div style={{ display: "flex", gap: 12, flexDirection: "column" }}>
+                  <a href="https://maps.google.com/?q=1343+Connecticut+Ave+NW+Washington+DC" target="_blank" rel="noopener noreferrer" style={{
+                    fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
+                    color: "#000", background: T.gold, padding: "14px 28px", borderRadius: 2,
+                    textDecoration: "none", fontWeight: 500, textAlign: "center", transition: "opacity 0.2s",
+                  }}
+                    onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+                    onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+                  >Get Directions</a>
+                  <a href="sms:+12024223005" style={{
+                    fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
+                    color: T.white, background: "transparent", border: `1px solid ${T.border}`, padding: "14px 28px", borderRadius: 2,
+                    textDecoration: "none", fontWeight: 300, textAlign: "center", transition: "border-color 0.2s",
+                  }}
+                    onMouseEnter={e => e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)"}
+                    onMouseLeave={e => e.currentTarget.style.borderColor = T.border}
+                  >Text to Reserve · (202) 422-3005</a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Bottom row — Private Events info cards */}
+          <Reveal delay={80}>
+            <div style={{ borderTop: `1px solid ${T.border}`, paddingTop: 56 }}>
+              <div style={{ marginBottom: 32 }}>
+                <Eyebrow>Private Events & Rentals</Eyebrow>
+                <h2 style={{ fontFamily: T.serif, fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 300 }}>Book the space for your group.</h2>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 1, background: T.border }}>
+                {[
+                  {
+                    title: "Sun, Mon & Tue",
+                    tag: "Full Venue Buyout",
+                    lines: [
+                      "Main floor available for private events",
+                      "Minimum spend $3,000",
+                      "Text (202) 422-3005 to reserve",
+                    ],
+                  },
+                  {
+                    title: "Wed & Thu",
+                    tag: "Private Happy Hour",
+                    lines: [
+                      "Private happy hour packages",
+                      "Minimum $800 for 2 hours",
+                      "Groups of 10 or more welcome",
+                    ],
+                  },
+                  {
+                    title: "Any Day",
+                    tag: "Rooms & Groups",
+                    lines: [
+                      "Rooms available for large groups (10+)",
+                      "No room fee — spend minimum only",
+                      "Salsa lessons available Fri & Sat 9–10 PM",
+                    ],
+                  },
+                ].map(({ title, tag, lines }) => (
+                  <div key={title} style={{ background: T.bg, padding: "36px 32px" }}>
+                    <p style={{ fontFamily: T.sans, fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: T.gold, marginBottom: 10 }}>{tag}</p>
+                    <h3 style={{ fontFamily: T.serif, fontSize: 22, fontWeight: 400, color: T.white, marginBottom: 20, lineHeight: 1.2 }}>{title}</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                      {lines.map((line, i) => (
+                        <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                          <div style={{ width: 4, height: 4, borderRadius: "50%", background: T.gold, flexShrink: 0, marginTop: 7 }} />
+                          <p style={{ fontFamily: T.sans, fontSize: 13, fontWeight: 300, color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{line}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Salsa + kitchen info strip */}
+              <div style={{
+                marginTop: 1, background: "rgba(232,200,74,0.04)",
+                border: `1px solid rgba(232,200,74,0.12)`, borderRadius: "0 0 3px 3px",
+                padding: "20px 32px", display: "flex", gap: 40, flexWrap: "wrap",
+              }}>
+                {[
+                  "🎵  Salsa lessons Fri & Sat · 9 PM – 10 PM",
+                  "💃  Salsa social dance · 10 PM – 11 PM",
+                  "🍽️  Dinner served 7 PM – 11 PM · Transforms to nightclub at 10 PM",
+                ].map((item, i) => (
+                  <p key={i} style={{ fontFamily: T.sans, fontSize: 12, color: "rgba(255,255,255,0.45)", letterSpacing: "0.05em" }}>{item}</p>
+                ))}
               </div>
             </div>
           </Reveal>
+
         </div>
       </section>
 
@@ -782,11 +900,16 @@ export default function App() {
           © 2026 Café Citron · 1343 Connecticut Ave NW, Washington DC
         </p>
         <div style={{ display: "flex", gap: 22 }}>
-          {["Instagram", "Facebook", "TikTok"].map(s => (
-            <a key={s} href="#" style={{ fontFamily: T.sans, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", textDecoration: "none", transition: "color 0.2s" }}
+          {[
+            { label: "Instagram", href: "https://instagram.com/cafecitron" },
+            { label: "Facebook", href: "https://facebook.com/CafeCitron" },
+            { label: "Yelp", href: "https://yelp.com/biz/café-citron-washington-4" },
+          ].map(({ label, href }) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+              style={{ fontFamily: T.sans, fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", textDecoration: "none", transition: "color 0.2s" }}
               onMouseEnter={e => e.currentTarget.style.color = T.gold}
               onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.25)"}
-            >{s}</a>
+            >{label}</a>
           ))}
         </div>
       </footer>
