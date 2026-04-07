@@ -74,34 +74,119 @@ function Eyebrow({ children, center = false }) {
 
 /* ─── Nav ─── */
 function Nav({ scrolled }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const links = [["About", "#about"], ["Menu", "#menu"], ["Events", "#events"], ["Gallery", "#gallery"], ["Private Events", "#private"]];
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-      height: 68,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      padding: "0 56px",
-      background: scrolled ? "rgba(7,7,7,0.93)" : "transparent",
-      backdropFilter: scrolled ? "blur(18px)" : "none",
-      borderBottom: scrolled ? `1px solid ${T.border}` : "1px solid transparent",
-      transition: "background 0.5s, border-color 0.5s, backdrop-filter 0.5s",
-    }}>
-      <div style={{ fontFamily: T.serif, fontSize: 20, fontWeight: 400, letterSpacing: "0.28em", color: T.white }}>
-        CAFÉ <span style={{ color: T.gold }}>CITRON</span>
-      </div>
-      <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
-        {[["About", "#about"], ["Menu", "#menu"], ["Events", "#events"], ["Gallery", "#gallery"], ["Private Events", "#private"]].map(([label, href]) => (
-          <NavLink key={label} href={href}>{label}</NavLink>
+    <>
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
+        height: 68,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 32px",
+        background: scrolled || menuOpen ? "rgba(7,7,7,0.97)" : "transparent",
+        backdropFilter: scrolled || menuOpen ? "blur(18px)" : "none",
+        borderBottom: scrolled || menuOpen ? `1px solid ${T.border}` : "1px solid transparent",
+        transition: "background 0.5s, border-color 0.5s",
+      }}>
+        {/* Logo */}
+        <div style={{ fontFamily: T.serif, fontSize: 20, fontWeight: 400, letterSpacing: "0.28em", color: T.white }}>
+          CAFÉ <span style={{ color: T.gold }}>CITRON</span>
+        </div>
+
+        {/* Desktop links */}
+        <div style={{ display: "flex", gap: 32, alignItems: "center", "@media(max-width:768px)": { display: "none" } }}
+          className="desktop-nav">
+          {links.map(([label, href]) => (
+            <NavLink key={label} href={href}>{label}</NavLink>
+          ))}
+          <a href="#contact" style={{
+            fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
+            color: "#000", background: T.gold, padding: "9px 22px", borderRadius: 2,
+            textDecoration: "none", fontWeight: 500, transition: "opacity 0.2s",
+          }}
+            onMouseEnter={e => e.currentTarget.style.opacity = "0.82"}
+            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+          >Reserve</a>
+        </div>
+
+        {/* Hamburger button — mobile only */}
+        <button
+          onClick={() => setMenuOpen(o => !o)}
+          className="hamburger-btn"
+          aria-label="Toggle menu"
+          style={{
+            background: "none", border: "none", cursor: "pointer",
+            padding: 8, display: "none", flexDirection: "column",
+            gap: 5, alignItems: "center", justifyContent: "center",
+          }}
+        >
+          {/* Three bars that animate into X */}
+          {[0, 1, 2].map(i => (
+            <span key={i} style={{
+              display: "block", width: 24, height: 1.5, background: T.white, borderRadius: 2,
+              transition: "transform 0.3s, opacity 0.3s",
+              transform: menuOpen
+                ? i === 0 ? "translateY(6.5px) rotate(45deg)"
+                : i === 2 ? "translateY(-6.5px) rotate(-45deg)"
+                : "scaleX(0)"
+                : "none",
+              opacity: menuOpen && i === 1 ? 0 : 1,
+            }} />
+          ))}
+        </button>
+      </nav>
+
+      {/* Mobile full-screen menu */}
+      <div style={{
+        position: "fixed", top: 68, left: 0, right: 0, bottom: 0, zIndex: 199,
+        background: "rgba(7,7,7,0.98)",
+        backdropFilter: "blur(20px)",
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        gap: 8,
+        opacity: menuOpen ? 1 : 0,
+        pointerEvents: menuOpen ? "all" : "none",
+        transition: "opacity 0.35s ease",
+      }}
+        className="mobile-menu"
+      >
+        {links.map(([label, href], i) => (
+          <a key={label} href={href} onClick={closeMenu} style={{
+            fontFamily: T.serif, fontSize: 36, fontWeight: 300, color: T.white,
+            textDecoration: "none", letterSpacing: "0.05em",
+            padding: "12px 0",
+            borderBottom: `1px solid ${T.border}`, width: "70%", textAlign: "center",
+            transition: `opacity 0.3s ease ${i * 60}ms, transform 0.3s ease ${i * 60}ms`,
+            opacity: menuOpen ? 1 : 0,
+            transform: menuOpen ? "translateY(0)" : "translateY(16px)",
+          }}
+            onMouseEnter={e => e.currentTarget.style.color = T.gold}
+            onMouseLeave={e => e.currentTarget.style.color = T.white}
+          >{label}</a>
         ))}
-        <a href="#contact" style={{
-          fontFamily: T.sans, fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase",
-          color: "#000", background: T.gold, padding: "9px 22px", borderRadius: 2,
-          textDecoration: "none", fontWeight: 500, transition: "opacity 0.2s",
-        }}
-          onMouseEnter={e => e.currentTarget.style.opacity = "0.82"}
-          onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-        >Reserve</a>
+        <a href="#contact" onClick={closeMenu} style={{
+          fontFamily: T.sans, fontSize: 11, letterSpacing: "0.28em", textTransform: "uppercase",
+          color: "#000", background: T.gold, padding: "15px 40px", borderRadius: 2,
+          textDecoration: "none", fontWeight: 500, marginTop: 24,
+          transition: `opacity 0.3s ease ${links.length * 60}ms, transform 0.3s ease ${links.length * 60}ms`,
+          opacity: menuOpen ? 1 : 0,
+          transform: menuOpen ? "translateY(0)" : "translateY(16px)",
+        }}>Reserve a Table</a>
       </div>
-    </nav>
+
+      {/* Inject responsive CSS */}
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .hamburger-btn { display: flex !important; }
+        }
+        @media (min-width: 769px) {
+          .mobile-menu { display: none !important; }
+        }
+      `}</style>
+    </>
   );
 }
 
@@ -316,17 +401,17 @@ export default function App() {
       category: "Happy Hour",
       label: "Food & drinks under $10",
       events: [
-        { title: "Happy Hour Specials", day: "Wed & Thu", time: "8 – 10 PM", tag: "Happy Hour", image: happyHourSpecials },
-        { title: "Wednesday Night Special", day: "Wednesday", time: "8 PM – 2 AM", tag: "Mid-Week", image: wedNightSpecial },
+        { title: "Happy Hour Specials", day: "Wed – Sat", time: "7 PM – 9 PM · Kitchen til 11 PM", tag: "Happy Hour", image: happyHourSpecials },
+        { title: "Wednesday Night Special", day: "Wednesday", time: "Late Night Happy Hour 9 PM – 12 AM", tag: "Mid-Week", image: wedNightSpecial },
       ],
     },
     {
       category: "Weekly Nights",
       label: "Our signature recurring events",
       events: [
-        { title: "El Sótano Fridays", day: "Friday", time: "7 PM – 3 AM", tag: "Latin Friday", image: elSoltanoFriday },
-        { title: "Friday Night Flier", day: "Friday", time: "7 PM – 3 AM", tag: "DJ Set", image: fridayNightFlier },
-        { title: "Salsa y Bachata", day: "Fri & Sat", time: "7 PM – 3 AM", tag: "Salsa · Bachata", image: fridaySaturdaySalsaYBachata },
+        { title: "El Sótano Fridays", day: "Friday", time: "Salsa Class 9 PM w/ Orlando Machuca", tag: "Latin Friday", image: elSoltanoFriday },
+        { title: "Friday Night", day: "Friday", time: "Happy Hour 7–11 PM · Salsa & Bachata Class 9 PM", tag: "DJ Set", image: fridayNightFlier },
+        { title: "Salsa y Bachata", day: "Fri & Sat", time: "Dance Class 9 PM · Kitchen 7–11:30 PM", tag: "Salsa · Bachata", image: fridaySaturdaySalsaYBachata },
       ],
     },
   ];
@@ -537,7 +622,7 @@ export default function App() {
               <div style={{ width: 1, height: 36, background: T.gold, flexShrink: 0 }} />
               <div>
                 <p style={{ fontFamily: T.sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: T.gold, marginBottom: 4 }}>Happy Hour Deal</p>
-                <p style={{ fontFamily: T.serif, fontSize: 19, fontWeight: 300, color: T.white }}>Food & drinks under $10 · Wed & Thu 8–10 PM · Fri & Sat 7–9 PM</p>
+                <p style={{ fontFamily: T.serif, fontSize: 19, fontWeight: 300, color: T.white }}>Food & drinks under $10 · Wed & Thu 9 PM–12 AM · Fri & Sat 7–9 PM · $10 house drinks, $7 beers, $8 shots</p>
               </div>
             </div>
             <a href="#contact" style={{
