@@ -778,7 +778,7 @@ export default function App() {
                 <div style={{ display: "flex", gap: 16, marginBottom: 32 }}>
                   {[
                     { label: "Facebook", href: "https://facebook.com/CafeCitron", icon: "f" },
-                    { label: "Yelp", href: "#", icon: "✦" },
+                    { label: "Yelp", href: "https://www.yelp.com/biz/caf%C3%A9-citron-washington-4?osq=Caf%C3%A9+Citron", icon: "✦" },
                     { label: "Instagram", href: "https://instagram.com/cafecitron", icon: "◎" },
                   ].map(({ label, href, icon }) => (
                     <a key={label} href={href} target="_blank" rel="noopener noreferrer"
