@@ -468,7 +468,7 @@ export default function App() {
             fontFamily: T.serif, fontWeight: 300, lineHeight: 1.01,
             fontSize: "clamp(56px, 9vw, 100px)", letterSpacing: "-0.01em", marginBottom: 28,
           }}>
-            Latin food,<br /><em style={{ fontStyle: "italic", color: T.gold }}>live music,</em><br />late nights.
+            Latin food,<br /><em style={{ fontStyle: "italic", color: T.gold }}>Live music,</em><br />Late nights.
           </h1>
           <p style={{
             animation: heroReady ? "heroFadeUp 0.9s ease 0.7s both" : "none",
